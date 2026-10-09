@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* Light — warm stone & sage, not flashy */
+:root,
+[data-theme="light"] {
+  --background: #f7f5f1;
+  --foreground: #2c2926;
+  --muted: #6f6860;
+  --border: #e3ddd3;
+  --card: #fffcf7;
+  --section: #efe9df;
+  --accent: #7a8f7a;
+  --accent-soft: #9aab99;
+  --highlight: #5c5348;
+  --grid: rgba(163, 154, 140, 0.35);
+  --glow: rgba(196, 184, 168, 0.35);
+  --hero-fade-top: rgba(247, 245, 241, 0.35);
+  --hero-fade-bottom: rgba(247, 245, 241, 0.85);
+  --selection-bg: #5c5348;
+  --selection-fg: #f7f5f1;
+}
+
+/* Dark — blue gradient palette */
+[data-theme="dark"] {
+  --background: #060d18;
+  --foreground: #e8eef8;
+  --muted: #94a8c4;
+  --border: rgba(96, 165, 250, 0.18);
+  --card: rgba(14, 32, 58, 0.65);
+  --section: rgba(10, 24, 48, 0.75);
+  --accent: #3b82f6;
+  --accent-soft: #60a5fa;
+  --highlight: #93c5fd;
+  --grid: rgba(59, 130, 246, 0.12);
+  --glow: rgba(37, 99, 235, 0.25);
+  --hero-fade-top: rgba(6, 13, 24, 0.2);
+  --hero-fade-bottom: rgba(6, 13, 24, 0.9);
+  --selection-bg: #2563eb;
+  --selection-fg: #e8eef8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-section: var(--section);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-highlight: var(--highlight);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  transition: background 0.4s ease, color 0.3s ease;
+}
+
+[data-theme="dark"] body {
+  background: linear-gradient(
+    165deg,
+    #060d18 0%,
+    #0c1f3d 35%,
+    #14325c 55%,
+    #0a1628 100%
+  );
+  background-attachment: fixed;
+}
+
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
