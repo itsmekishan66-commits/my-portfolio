@@ -9,12 +9,12 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border px-6 py-10">
-      <Container className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-        <p className="text-sm text-muted">
+      <Container className="flex flex-col items-center justify-center gap-3 text-center sm:flex-row sm:justify-between sm:gap-4 sm:text-left">
+        <p className="text-balance text-sm text-muted">
           © {year} {profile.name}. Built with Next.js, Framer Motion & Three.js.
         </p>
         <motion.p
-          className="font-mono text-xs text-muted"
+          className="font-mono text-xs text-muted sm:text-right"
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 3, repeat: Infinity }}
         >

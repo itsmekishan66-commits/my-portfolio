@@ -53,13 +53,16 @@ export function About() {
           </FadeIn>
         </div>
 
-        <StaggerIn className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-4" delay={0.1}>
+        <StaggerIn
+          className="mt-16 grid auto-rows-fr grid-cols-2 gap-4 sm:grid-cols-4"
+          delay={0.1}
+        >
           {stats.map((stat) => (
-            <StaggerItem key={stat.label}>
+            <StaggerItem key={stat.label} className="h-full">
               <motion.div
                 whileHover={{ y: -4, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                className="rounded-2xl border border-border bg-card p-5 backdrop-blur-sm"
+                className="flex h-full flex-col justify-center rounded-2xl border border-border bg-card p-5 backdrop-blur-sm"
               >
                 <p className="text-xs text-muted">{stat.label}</p>
                 <p className="mt-2 text-sm font-medium text-foreground">{stat.value}</p>

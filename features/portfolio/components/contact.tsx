@@ -41,7 +41,9 @@ export function Contact() {
                     {profile.email}
                   </Button>
                 </a>
-                <p className="text-sm text-muted">{profile.location}</p>
+                <p className="text-center text-sm text-muted sm:text-left">
+                  {profile.location}
+                </p>
               </div>
             </div>
 
