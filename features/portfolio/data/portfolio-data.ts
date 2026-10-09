@@ -59,21 +59,39 @@ export const experience: ExperienceItem[] = [
 
 export const projects: Project[] = [
   {
-    title: "DevConnect",
+    title: "Sugandhit Perfume",
     description:
-      "Full-stack collaboration platform with Next.js, Express.js REST APIs, and PostgreSQL — including auth and real-time updates.",
-    tags: ["Next.js", "Express.js", "PostgreSQL"],
+      "Custom perfume studio where customers design their own signature scent and browse handcrafted fragrance collections.",
+    tags: ["Next.js", "Node.js", "REST APIs"],
+    link: "https://sugandhit-perfume-frontend.vercel.app/",
+    images: [
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+    ],
   },
   {
-    title: "ShopStream",
+    title: "Umesh Ghadi & Radio Marmat Pasal",
     description:
-      "E-commerce storefront with server-side rendering, secure checkout, and a Node.js admin dashboard backed by MongoDB.",
-    tags: ["Next.js", "Node.js", "MongoDB"],
+      "Premium watches e-commerce storefront with product browsing, cart, and checkout.",
+    tags: ["Next.js", "Express.js", "MongoDB"],
+    link: "https://myecommerceproject-frontend.vercel.app/",
+    images: [
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=1200&q=80",
+    ],
   },
   {
-    title: "TaskFlow",
+    title: "HamroAssets",
     description:
-      "Team task manager with Firebase Auth, Firestore, and a React dashboard featuring role-based access.",
-    tags: ["React", "Firebase", "REST APIs"],
+      "Password manager that stores and organizes credentials securely, with a guided first-time setup flow.",
+    tags: ["Next.js", "Node.js", "PostgreSQL"],
+    link: "https://mero-assets-client.vercel.app/",
+    images: [
+      "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?auto=format&fit=crop&w=1200&q=80",
+    ],
   },
 ];
