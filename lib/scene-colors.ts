@@ -26,13 +26,13 @@ export function getScenePalette(theme: Theme): ScenePalette {
   }
 
   return {
-    solid: "#8b7e6e",
-    wire: "#a39a8c",
-    particle: "#b5a898",
-    sparkle: "#9a8f7d",
-    deviceBody: "#6b6358",
-    deviceScreen: "#f5f0e8",
-    lightMain: "#faf8f5",
-    lightAccent: "#c4b8a8",
+    solid: "#2563eb",
+    wire: "#60a5fa",
+    particle: "#3b82f6",
+    sparkle: "#38bdf8",
+    deviceBody: "#1e3a5f",
+    deviceScreen: "#dbeafe",
+    lightMain: "#ffffff",
+    lightAccent: "#bfdbfe",
   };
 }

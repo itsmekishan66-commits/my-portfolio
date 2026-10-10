@@ -2,24 +2,24 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-/* Light — warm stone & sage, not flashy */
+/* Light — cool blue, bright and vivid */
 :root,
 [data-theme="light"] {
-  --background: #f7f5f1;
-  --foreground: #2c2926;
-  --muted: #6f6860;
-  --border: #e3ddd3;
-  --card: #fffcf7;
-  --section: #efe9df;
-  --accent: #7a8f7a;
-  --accent-soft: #9aab99;
-  --highlight: #5c5348;
-  --grid: rgba(163, 154, 140, 0.35);
-  --glow: rgba(196, 184, 168, 0.35);
-  --hero-fade-top: rgba(247, 245, 241, 0.35);
-  --hero-fade-bottom: rgba(247, 245, 241, 0.85);
-  --selection-bg: #5c5348;
-  --selection-fg: #f7f5f1;
+  --background: #f4f8ff;
+  --foreground: #0f1e33;
+  --muted: #5b7395;
+  --border: #d6e4f7;
+  --card: #ffffff;
+  --section: #e9f2ff;
+  --accent: #2563eb;
+  --accent-soft: #60a5fa;
+  --highlight: #1d4ed8;
+  --grid: rgba(37, 99, 235, 0.1);
+  --glow: rgba(96, 165, 250, 0.3);
+  --hero-fade-top: rgba(244, 248, 255, 0.35);
+  --hero-fade-bottom: rgba(244, 248, 255, 0.85);
+  --selection-bg: #2563eb;
+  --selection-fg: #f4f8ff;
 }
 
 /* Dark — blue gradient palette */
@@ -64,6 +64,17 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   transition: background 0.4s ease, color 0.3s ease;
+}
+
+[data-theme="light"] body {
+  background: linear-gradient(
+    165deg,
+    #f8fbff 0%,
+    #eef5ff 40%,
+    #e4eeff 70%,
+    #f4f8ff 100%
+  );
+  background-attachment: fixed;
 }
 
 [data-theme="dark"] body {
