@@ -12,7 +12,7 @@ const SceneCanvas = dynamic(() => import("../three/scene-canvas"), {
 export function Hero3D() {
   return (
     <div
-      className="pointer-events-auto absolute inset-0 z-0 h-full w-full opacity-90"
+      className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-90"
       aria-hidden
     >
       <SceneCanvas />

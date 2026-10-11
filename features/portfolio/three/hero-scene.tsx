@@ -1,130 +1,76 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Float, Sparkles } from "@react-three/drei";
+import { Html, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
 import { useTheme } from "@/hooks/use-theme";
 import { getScenePalette } from "@/lib/scene-colors";
+import {
+  ExpressIcon,
+  FirebaseIcon,
+  GitIcon,
+  JavaScriptIcon,
+  MongoDBIcon,
+  NextjsIcon,
+  NodejsIcon,
+  PostgresqlIcon,
+  ReactIcon,
+  TailwindIcon,
+  TypeScriptIcon,
+} from "@/components/ui/tech-icons";
 
-function InteractiveShape({
-  geometry,
-  position,
-  rotationSpeed = 0.5,
-  wireframe = false,
-  palette,
-}: {
-  geometry: React.ReactNode;
-  position: [number, number, number];
-  rotationSpeed?: number;
-  wireframe?: boolean;
-  palette: ReturnType<typeof getScenePalette>;
-}) {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const [hovered, setHovered] = useState(false);
-  const impulse = useRef(0);
+const ORBIT_TOOLS = [
+  { name: "Next.js", Icon: NextjsIcon, color: "var(--foreground)" },
+  { name: "TypeScript", Icon: TypeScriptIcon, color: "#3178c6" },
+  { name: "React", Icon: ReactIcon, color: "#61dafb" },
+  { name: "Node.js", Icon: NodejsIcon, color: "#5fa04e" },
+  { name: "Express.js", Icon: ExpressIcon, color: "var(--foreground)" },
+  { name: "PostgreSQL", Icon: PostgresqlIcon, color: "#4169e1" },
+  { name: "MongoDB", Icon: MongoDBIcon, color: "#47a248" },
+  { name: "Firebase", Icon: FirebaseIcon, color: "#ffca28" },
+  { name: "JavaScript", Icon: JavaScriptIcon, color: "#f7df1e" },
+  { name: "Tailwind CSS", Icon: TailwindIcon, color: "#06b6d4" },
+  { name: "Git", Icon: GitIcon, color: "#f05032" },
+];
+
+function ToolOrbit() {
+  const spin = useRef<THREE.Group>(null);
+  const { viewport, size } = useThree();
+
+  // Keep the ring inside the viewport on every screen size.
+  const radius = Math.min(viewport.width, viewport.height) * 0.4;
+  const step = (Math.PI * 2) / ORBIT_TOOLS.length;
+
+  const yOffset = size.height ? -(50 / size.height) * viewport.height : 0;
 
   useFrame((_, delta) => {
-    if (!meshRef.current) return;
-    meshRef.current.rotation.x += delta * rotationSpeed * (hovered ? 1.4 : 0.5);
-    meshRef.current.rotation.y += delta * rotationSpeed * (hovered ? 1.2 : 0.6);
-    if (impulse.current > 0) {
-      meshRef.current.rotation.z += delta * impulse.current;
-      impulse.current = THREE.MathUtils.lerp(impulse.current, 0, 0.92);
-    }
-    const targetScale = hovered ? 1.15 : 1;
-    meshRef.current.scale.lerp(
-      new THREE.Vector3(targetScale, targetScale, targetScale),
-      0.12
-    );
+    if (spin.current) spin.current.rotation.z -= delta * 0.28;
   });
 
   return (
-    <Float speed={hovered ? 2.5 : 1.8} rotationIntensity={0.6} floatIntensity={0.8}>
-      <mesh
-        ref={meshRef}
-        position={position}
-        onPointerOver={(e) => {
-          e.stopPropagation();
-          setHovered(true);
-          document.body.style.cursor = "grab";
-        }}
-        onPointerOut={() => {
-          setHovered(false);
-          document.body.style.cursor = "auto";
-        }}
-        onClick={(e) => {
-          e.stopPropagation();
-          impulse.current = 4;
-        }}
-      >
-        {geometry}
-        <meshStandardMaterial
-          color={wireframe ? palette.wire : palette.solid}
-          wireframe={wireframe}
-          metalness={wireframe ? 0 : 0.55}
-          roughness={wireframe ? 1 : 0.3}
-          emissive={hovered ? palette.solid : "#000000"}
-          emissiveIntensity={hovered ? 0.25 : 0}
-        />
-      </mesh>
-    </Float>
-  );
-}
-
-function ShapeCluster({ palette }: { palette: ReturnType<typeof getScenePalette> }) {
-  const groupRef = useRef<THREE.Group>(null);
-  const { pointer } = useThree();
-
-  useFrame((state) => {
-    if (!groupRef.current) return;
-    const t = state.clock.elapsedTime;
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(
-      groupRef.current.rotation.y,
-      pointer.x * 0.9,
-      0.1
-    );
-    groupRef.current.rotation.x = THREE.MathUtils.lerp(
-      groupRef.current.rotation.x,
-      pointer.y * 0.55,
-      0.1
-    );
-    groupRef.current.position.y = Math.sin(t * 0.8) * 0.2;
-    groupRef.current.position.x = THREE.MathUtils.lerp(
-      groupRef.current.position.x,
-      pointer.x * 0.4,
-      0.06
-    );
-  });
-
-  return (
-    <group ref={groupRef}>
-      <InteractiveShape
-        position={[-1.8, 0.3, 0]}
-        rotationSpeed={0.35}
-        wireframe
-        palette={palette}
-        geometry={<icosahedronGeometry args={[0.75, 1]} />}
-      />
-      <InteractiveShape
-        position={[1.6, -0.2, -0.5]}
-        rotationSpeed={0.45}
-        palette={palette}
-        geometry={<torusKnotGeometry args={[0.55, 0.16, 128, 24]} />}
-      />
-      <InteractiveShape
-        position={[0.2, 1.1, -0.8]}
-        rotationSpeed={0.3}
-        wireframe
-        palette={palette}
-        geometry={<octahedronGeometry args={[0.65, 0]} />}
-      />
-      <InteractiveShape
-        position={[2.2, 0.8, 0.3]}
-        rotationSpeed={0.5}
-        palette={palette}
-        geometry={<boxGeometry args={[0.9, 0.9, 0.9]} />}
-      />
+    <group position={[0, yOffset, 0]} rotation={[0.42, 0, 0]}>
+      <group ref={spin}>
+        {ORBIT_TOOLS.map(({ name, Icon, color }, i) => {
+          const angle = i * step;
+          return (
+            <Html
+              key={name}
+              position={[Math.cos(angle) * radius, Math.sin(angle) * radius, 0]}
+              distanceFactor={7}
+              zIndexRange={[30, 0]}
+              wrapperClass="pointer-events-none select-none"
+            >
+              <div
+                style={{ color }}
+                className="flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-xl border border-border bg-card/75 shadow-lg backdrop-blur-md sm:h-12 sm:w-12 sm:rounded-2xl"
+              >
+                <Icon size={18} className="h-4 w-4 sm:h-5.5 sm:w-5.5" />
+              </div>
+            </Html>
+          );
+        })}
+      </group>
     </group>
   );
 }
@@ -175,21 +121,8 @@ export function HeroScene() {
 
   return (
     <>
-      <ambientLight intensity={theme === "dark" ? 0.4 : 0.55} />
-      <directionalLight
-        position={[4, 6, 4]}
-        intensity={1.2}
-        color={palette.lightMain}
-      />
-      <directionalLight
-        position={[-4, -2, -3]}
-        intensity={0.5}
-        color={palette.lightAccent}
-      />
-      <pointLight position={[0, 2, 3]} intensity={0.7} color={palette.sparkle} />
-
       <ParticleField color={palette.particle} />
-      <ShapeCluster palette={palette} />
+      <ToolOrbit />
 
       <Sparkles
         count={70}
