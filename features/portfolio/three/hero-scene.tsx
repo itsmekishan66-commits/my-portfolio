@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Html, Sparkles } from "@react-three/drei";
+import { Float, Html, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
 import { useTheme } from "@/hooks/use-theme";
 import { getScenePalette } from "@/lib/scene-colors";
@@ -75,6 +75,59 @@ function ToolOrbit() {
   );
 }
 
+// Tailwind's `md` breakpoint. Below this the orbiting icons crowd the narrow
+// hero, so we swap them for a single wireframe globe instead.
+const MOBILE_BREAKPOINT = 768;
+
+function MobileGlobe({
+  palette,
+}: {
+  palette: ReturnType<typeof getScenePalette>;
+}) {
+  const globe = useRef<THREE.Mesh>(null);
+  const { viewport } = useThree();
+
+  // Sit the globe on the right edge so ~half of it hangs off-screen.
+  const radius = 1.1;
+  const rightEdge = viewport.width / 2;
+
+  useFrame((_, delta) => {
+    if (!globe.current) return;
+    globe.current.rotation.y += delta * 0.18;
+    globe.current.rotation.x += delta * 0.06;
+  });
+
+  return (
+    <group>
+      <ambientLight intensity={0.6} />
+      <directionalLight
+        position={[4, 6, 4]}
+        intensity={1.1}
+        color={palette.lightMain}
+      />
+      <directionalLight
+        position={[-4, -2, -3]}
+        intensity={0.5}
+        color={palette.lightAccent}
+      />
+
+      <Float speed={1.6} rotationIntensity={0.4} floatIntensity={0.7}>
+        <mesh ref={globe} position={[rightEdge, -0.4, -0.5]}>
+          <icosahedronGeometry args={[radius, 1]} />
+          <meshStandardMaterial
+            color={palette.wire}
+            wireframe
+            metalness={0}
+            roughness={1}
+            transparent
+            opacity={0.5}
+          />
+        </mesh>
+      </Float>
+    </group>
+  );
+}
+
 const PARTICLE_COUNT = 400;
 
 const particlePositions = (() => {
@@ -118,11 +171,13 @@ function ParticleField({ color }: { color: string }) {
 export function HeroScene() {
   const { theme } = useTheme();
   const palette = getScenePalette(theme);
+  const { size } = useThree();
+  const isMobile = size.width > 0 && size.width < MOBILE_BREAKPOINT;
 
   return (
     <>
       <ParticleField color={palette.particle} />
-      <ToolOrbit />
+      {isMobile ? <MobileGlobe palette={palette} /> : <ToolOrbit />}
 
       <Sparkles
         count={70}

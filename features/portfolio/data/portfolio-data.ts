@@ -13,7 +13,7 @@ export const profile: Profile = {
   email: "itsmekishan66@gmail.com",
   location: "Available for remote & on-site",
   social: {
-    github: "https://github.com",
+    github: "https://github.com/itsmekishan66-commits",
     linkedin: "https://linkedin.com",
     twitter: "https://twitter.com",
   },
